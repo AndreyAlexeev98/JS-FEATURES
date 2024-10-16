@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie list</title>
+    <link rel="stylesheet" href="./main.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <form id="form">
+            <label>
+                <p>cookie name</p>
+                <input name="name" type="text">
+            </label>
+            <label>
+                <p>cookie value</p>
+                <input name="value" type="text">
+            </label>
+            <input type="submit">
+        </form>
+
+        <h1>Cookie list</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>value</th>
+                    <th>action</th>
+                </tr>
+            </thead>
+
+            <tbody id="tbody">
+                <tr>
+                    <td>2</td>
+                    <td>2</td>
+                    <td style="text-align: center;">
+                        <button>delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="./index.js"></script>
+</body>
+
+</html>

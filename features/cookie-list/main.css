@@ -1,0 +1,27 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  border: 1px solid grey;
+}
+
+th {
+  border-width: 2px;
+}
+
+td {
+  padding: 5px;
+}
+
+td:last-child {
+  text-align: center;
+}
