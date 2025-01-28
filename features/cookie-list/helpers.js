@@ -61,3 +61,20 @@ function deleteCookie(name) {
     "max-age": -1,
   });
 }
+
+/**
+ * Функция парсинга cookies из строки в массив объектов.
+ * @returns {Array} - Массив объектов, представляющих пары ключ-значение cookies.
+ */
+function parceCookies() {
+  const cookieArrObj = [];
+
+  document.cookie.split(";").forEach((cook) => {
+    const arr = cook.trim().split("=");
+    const cookieObj = { key: arr[0], value: arr[1] };
+
+    cookieArrObj.push(cookieObj);
+  });
+
+  return cookieArrObj;
+}
