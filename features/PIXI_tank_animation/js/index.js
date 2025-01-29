@@ -1,4 +1,5 @@
 import { Application, Graphics, Rectangle } from "./pixi.mjs";
+import { TweenManager } from "./Tween.js";
 import { assetsMap } from "./assetsMap.js";
 import { Tank } from "./Tank.js";
 
@@ -11,48 +12,62 @@ const app = new Application({
 });
 
 const runGame = () => {
-  const marker = new Graphics();
-  marker.beginFill("0xff0000", 1);
-  marker.drawCircle(0, 0, 5); // drawRect(x, y, width, heigth) ( x=0 y=0 центр заливки относительно верхнего левого угла рисуемого элемента)
-  marker.endFill();
-
   const tank = new Tank();
   app.stage.addChild(tank.view);
 
-  //   tank._tracksLeft.play();
-  //   tank._tracksRight.play();
-
-  //   app.stage.addChild(marker); // Добавили нарисованный на canvas элемент в контейнер
   app.stage.position.set(800 / 2, 800 / 2); // изменили позиционирование добавляемых элементов относительноцентра контейнера
 
-  //   tank.rotateTowerBy(50);
-  //   tank.rotateBodyBy(60);
+  window["TANK"] = tank;
 
-  //   (function () {
-  //     let isRun = false;
-  //     setInterval(() => {
-  //       if (isRun) {
-  //         tank.stopTracks();
-  //       } else {
-  //         tank.startTracks();
-  //       }
-  //       isRun = !isRun;
-  //     }, 2000);
-  //   })();
+  const tweenManager = new TweenManager(app.ticker);
 
-  const onPointerDown = ({ data }) => {
-    console.log(data);
+  const moveTank = ({ data }) => {
+    const distanceToCenter = data.getLocalPosition(app.stage);
+    const distanceToTank = data.getLocalPosition(tank.view);
+    const angle = Math.atan2(distanceToTank.y, distanceToTank.x);
 
-    const positions = data.getLocalPosition(app.stage);
-    app.stage.addChild(
-      new Graphics()
-        .beginFill(0xff0000, 1)
-        .drawCircle(positions.x, positions.y, 5)
-        .endFill()
+    let callAmount = 2;
+    const move = () => {
+      callAmount -= 1;
+      if (callAmount <= 0) {
+        tweenManager.createTween(
+          tank,
+          3000,
+          { x: distanceToCenter.x, y: distanceToCenter.y },
+          {
+            onStart: () => tank.startTracks(),
+            onFinish: () => tank.stopTracks(),
+          }
+        );
+      }
+    };
+
+    tweenManager.createTween(
+      tank,
+      1000,
+      { towerDirection: angle },
+      {
+        onFinish: () => move(),
+      }
+    );
+
+    tweenManager.createTween(
+      tank,
+      2000,
+      { bodyDirection: angle },
+      {
+        onStart: () => {
+          tank.startTracks();
+        },
+        onFinish: () => {
+          tank.stopTracks();
+          move();
+        },
+      }
     );
   };
 
-  app.stage.on("pointerdown", onPointerDown, undefined);
+  app.stage.on("pointerdown", moveTank, undefined);
   app.stage.interactive = true;
   app.stage.interactiveChildren = false;
   app.stage.hitArea = new Rectangle(-400, -400, 800, 800); // для обработки события по всему stage

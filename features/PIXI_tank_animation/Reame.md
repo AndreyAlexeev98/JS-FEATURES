@@ -11,6 +11,8 @@
 - [Примеры анимаций](https://pixijs.com/8.x/examples/basic/container);
 - [Документация используемой версии](https://pixijs.download/v5.4.0-rc.1/docs/index.html);
 - [PIXI.Container](https://pixijs.download/v5.4.0-rc.1/docs/PIXI.Container.html);
+- [Тикер](https://pixijs.download/v5.3.1/docs/PIXI.Application.html#ticker);
 - [Версии](https://github.com/pixijs/pixijs/releases);
 - [Исходники курса](https://github.com/HusakYurii/pixijs-tween-base-course);
 - [Видеолекции](https://www.youtube.com/watch?v=hpJGJSE41sY&list=PLU25QJOHLmMOLY9scIbEjmzYCEgkMH8yy);
+- [TweenJS](https://tweenjs.github.io/tween.js/);
