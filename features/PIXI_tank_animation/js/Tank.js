@@ -43,12 +43,12 @@ export class Tank {
     this._view.addChild(this._bodyContainer);
 
     /*===========================================
-        1) move the left tracks to the bodyContainer;
-        2) move the right tracks to the bodyContainer;
-        3) move hull to the bodyContainer;
-        4) remove the reference to the hull object, we don't need to store it as a private variableж
-        5) use the rotateBodyBy method to check it the body rotates as it was shown in the vide
-        */
+    1) move the left tracks to the bodyContainer;
+    2) move the right tracks to the bodyContainer;
+    3) move hull to the bodyContainer;
+    4) remove the reference to the hull object, we don't need to store it as a private variable
+    5) use the rotateBodyBy method to check it the body rotates as it was shown in the vide
+    */
     // левая и правая гусеница
     this._tracksLeft = createAnimatedSprite(["TrackСFrame1", "TrackСFrame2"], {
       x: 0,
@@ -61,13 +61,16 @@ export class Tank {
     this._tracksLeft.animationSpeed = 0.25;
     this._tracksRight.animationSpeed = 0.25;
 
-    this._view.addChild(this._tracksLeft, this._tracksRight);
+    // Перемещаем эти объекты в bodyContainer
+    this._bodyContainer.addChild(this._tracksLeft, this._tracksRight);
 
+    // Используем createSprite для создания спрайта
+    // Так как не нужно хранить ссылку на hull объект мы можем его присвоить в локальную переменную
     // кузов
-    this._hull = new Sprite(Texture.from("HeavyHullB"));
-    this._hull.anchor.set(0.5);
+    const hull = createSprite("HeavyHullB");
 
-    this._view.addChild(this._hull);
+    // Добавляем hull в bodyContainer
+    this._bodyContainer.addChild(hull);
 
     /// ===========================================
 
@@ -85,6 +88,7 @@ export class Tank {
 
     this._towerContainer.addChild(createSprite("HeavyTowerB"));
   }
+
   get view() {
     return this._view;
   }
