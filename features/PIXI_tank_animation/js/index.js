@@ -2,12 +2,13 @@ import { Application, Graphics, Rectangle } from "./pixi.mjs";
 import { TweenManager } from "./Tween.js";
 import { assetsMap } from "./assetsMap.js";
 import { Tank } from "./Tank.js";
+import { APP_BG_COLOR, APP_HEIGHT, APP_WIDTH } from "../config/index.js";
 
 // Create the application
 const app = new Application({
-  width: 800,
-  height: 800,
-  backgroundColor: 0xc2c2c2,
+  width: APP_WIDTH,
+  height: APP_HEIGHT,
+  backgroundColor: APP_BG_COLOR,
   view: document.getElementById("canvas"),
 });
 
@@ -15,9 +16,9 @@ const runGame = () => {
   const tank = new Tank();
   app.stage.addChild(tank.view);
 
-  app.stage.position.set(800 / 2, 800 / 2); // изменили позиционирование добавляемых элементов относительноцентра контейнера
+  app.stage.position.set(APP_WIDTH / 2, APP_HEIGHT / 2); // изменили позиционирование добавляемых элементов относительноцентра контейнера
 
-  window["TANK"] = tank;
+  // window["TANK"] = tank; // для быстрого дебага в консоле
 
   const tweenManager = new TweenManager(app.ticker);
 
@@ -70,7 +71,13 @@ const runGame = () => {
   app.stage.on("pointerdown", moveTank, undefined);
   app.stage.interactive = true;
   app.stage.interactiveChildren = false;
-  app.stage.hitArea = new Rectangle(-400, -400, 800, 800); // для обработки события по всему stage
+
+  app.stage.hitArea = new Rectangle(
+    `-${APP_WIDTH / 2}`,
+    `-${APP_HEIGHT / 2}`,
+    APP_WIDTH,
+    APP_HEIGHT
+  ); // для обработки события по всему stage
 };
 
 assetsMap.sprites.forEach((value) => app.loader.add(value));

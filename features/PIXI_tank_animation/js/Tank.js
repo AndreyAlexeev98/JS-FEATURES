@@ -38,6 +38,7 @@ export const createSprite = (
 export class Tank {
   constructor() {
     this._view = new Container();
+    this._view.scale.set(1.5);
 
     this._bodyContainer = new Container(); // контейнер для элементов - кузов и гусеницы
     this._view.addChild(this._bodyContainer);
